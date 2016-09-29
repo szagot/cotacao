@@ -42,14 +42,16 @@ if (isset($_POST[ 'email' ])) {
     $cotacao[ 'telefone' ] = filter_input(INPUT_POST, 'telefone');
     $cotacao[ 'obs' ] = filter_input(INPUT_POST, 'obs');
 
-    $produtosNome = filter_input_array(INPUT_POST, 'produto');
-    $produtosQtde = filter_input_array(INPUT_POST, 'qtde');
+    $produtosNome = $_POST[ 'produto' ];
+    $produtosQtde = $_POST[ 'qtde' ];
 
     foreach ($produtosNome as $index => $ref) {
-        $cotacao[ 'itens' ][ $index ] = [
-            'produto' => $ref,
-            'qtde'    => $produtosQtde[ $index ]
-        ];
+        if (! empty($ref)) {
+            $cotacao[ 'itens' ][ $index ] = [
+                'produto' => $ref,
+                'qtde'    => $produtosQtde[ $index ]
+            ];
+        }
     }
 
 }
