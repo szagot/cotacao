@@ -15,21 +15,46 @@ if (! isset($cotacao)) {
             <div class="msg"><?= $cotacao[ 'msg' ] ?></div>
 
             <!-- CAMPOS -->
+            <label for="razao">Razão Social</label>
             <input type="text" name="razao" id="razao" value="<?= $cotacao[ 'razao' ] ?>" required>
+
+            <label for="email">Email</label>
             <input type="email" name="email" id="email" value="<?= $cotacao[ 'email' ] ?>" required>
+
+            <label for="cnpj">CNPJ</label>
             <input type="text" name="cnpj" id="cnpj" value="<?= $cotacao[ 'cnpj' ] ?>" required>
+
+            <label for="ie">Inscrição Estadual</label>
             <input type="text" name="ie" id="ie" value="<?= $cotacao[ 'ie' ] ?>">
+
+            <label for="tipo">Finalidade</label>
             <select name="tipo" id="tipo">
                 <option <?= ($cotacao[ 'tipo' ] == 'Consumo' ? 'selected' : '') ?>>Consumo</option>
                 <option <?= ($cotacao[ 'tipo' ] == 'Revenda' ? 'selected' : '') ?>>Revenda</option>
             </select>
-            <input type="text" name="cep" id="cep" value="<?= $cotacao[ 'cep' ] ?>">
+
+            <label for="rua">Rua</label>
             <input type="text" name="rua" id="rua" value="<?= $cotacao[ 'rua' ] ?>">
+
+            <label for="num">Número</label>
             <input type="text" name="num" id="num" value="<?= $cotacao[ 'num' ] ?>">
+
+            <label for="cep">CEP</label>
+            <input type="text" name="cep" id="cep" value="<?= $cotacao[ 'cep' ] ?>">
+
+            <label for="bairro">Bairro</label>
             <input type="text" name="bairro" id="bairro" value="<?= $cotacao[ 'bairro' ] ?>">
+
+            <label for="cidade">Cidade</label>
             <input type="text" name="cidade" id="cidade" value="<?= $cotacao[ 'cidade' ] ?>">
+
+            <label for="uf">Estado</label>
             <input type="text" name="uf" id="uf" value="<?= $cotacao[ 'uf' ] ?>">
+
+            <label for="telefone">Telefone</label>
             <input type="text" name="telefone" id="telefone" value="<?= $cotacao[ 'telefone' ] ?>" required>
+
+            <label for="obs">Observação</label>
             <textarea name="obs" id="obs"><?= $cotacao[ 'obs' ] ?></textarea>
 
             <!-- Produtos -->
