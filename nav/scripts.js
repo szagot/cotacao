@@ -12,9 +12,11 @@
             .eq( 0 )
             .append( '<tr id="pro_' + index + '">' + linha.html() + '</tr>' );
 
+        // Remove a ação de mudança de todos os selects
         $( '.produtos' )
             .unbind( 'change' );
 
+        // Recoloca a ação de mudança apenas no select criado
         $( '#pro_' + index )
             .find( '.produtos' )
             .bind( 'change', function () {
