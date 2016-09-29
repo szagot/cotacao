@@ -74,6 +74,7 @@ if (! isset($cotacao)) {
                     </tr>
                 </tbody>
             </table>
+            <button class="btn enviar" type="submit">Enviar</button>
         </form>
 
         <script src="../js/bases/jquery.2.min.js" type="text/javascript"></script>
