@@ -33,7 +33,7 @@ if (! isset($cotacao)) {
             <textarea name="obs" id="obs"><?= $cotacao[ 'obs' ] ?></textarea>
 
             <!-- Produtos -->
-            <table>
+            <table id="produtos">
                 <thead>
                     <tr>
                         <td>Produto</td>
@@ -61,7 +61,7 @@ if (! isset($cotacao)) {
                     <?php } ?>
                     <tr id="new_line">
                         <td>
-                            <select name="produto[]">
+                            <select name="produto[]" class="produtos">
                                 <option value="-1"></option>
                                 <!-- Pegando produtos -->
                                 <?php foreach ($produtos as $produto) { ?>
