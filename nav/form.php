@@ -70,7 +70,7 @@ if (! isset($cotacao)) {
                                 <?php } ?>
                             </select>
                         </td>
-                        <td><input type="number" name="qtde[]" value="" min="0" class="qtde"></td>
+                        <td><input type="number" name="qtde[]" value="1" min="1" class="qtde"></td>
                     </tr>
                 </tbody>
             </table>
