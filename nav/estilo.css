@@ -13,3 +13,121 @@ body {
 p {
     margin:10px 0;
 }
+
+#form-cotacao {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+#form-cotacao .bloco {
+    display: block;
+    padding: 15px;
+    background: #ecf3f7;
+    color: #38596b;
+    font-size: 14px;
+    overflow: hidden;
+}
+
+#form-cotacao .bloco .title {
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+    font-size: 24px;
+    text-transform: uppercase;
+    border-bottom: 1px solid #cbdae2;
+}
+
+#form-cotacao .bloco .content {
+    padding: 0 15px;
+}
+
+#form-cotacao .bloco .campo {
+    float: left;
+    margin: 10px 5% 0 0;
+}
+
+#form-cotacao .bloco .campo:last-child, #form-cotacao .bloco .no-margin {
+    margin-right: 0;
+}
+
+#form-cotacao .bloco .big {
+    width: 65%;
+}
+
+#form-cotacao .bloco .small {
+    width: 30%;
+}
+
+#form-cotacao label {
+    display: block;
+    margin-bottom: 3px;
+}
+
+#form-cotacao input, #form-cotacao textarea, #form-cotacao select, #form-cotacao button {
+    width: 100%;
+    padding: 10px;
+    color: #38596b;
+    border: 1px solid #cbdae2;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+#form-cotacao input:focus, #form-cotacao textarea:focus {
+    border-color: #38596b;
+}
+
+#form-cotacao select {
+    padding: 9px 10px;
+}
+
+#form-cotacao select option {
+    background-color: #ecf3f7;
+}
+
+#form-cotacao textarea {
+    height: 100px;
+}
+
+#form-cotacao button {
+    float: right;
+    max-width: 100px;
+    margin: 10px 2px;
+    background-color: #fff;
+    color: #38596b;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+#form-cotacao button:hover {
+    background-color: #9ae712;
+    color: #38596b;
+    font-weight: 600;
+    border-color: #fff;
+}
+
+#form-cotacao .divisoria {
+    display: block;
+    height: 1px;
+    background: #cbdae2;
+    margin: 5px 0;
+}
+
+#form-cotacao table {
+    width: 100%;
+}
+
+@media (max-width: 420px) {
+    #form-cotacao .bloco .content {
+        padding: 0;
+    }
+}
+
+@media (max-width: 380px) {
+    #form-cotacao .bloco .small, #form-cotacao .bloco .big {
+        width: 100%;
+        margin-right: 0;
+    }
+}
