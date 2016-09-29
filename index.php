@@ -21,17 +21,40 @@ $cotacao = [
     'obs'      => '',
 
     // Produtos
-    'itens'    => [
-        [
-            'produto' => 'AH-3528-IP65-60-12-VO',
-            'qtde'    => 3
-        ],
-        [
-            'produto' => 'KIT-AH-3528-IP65-60-12-6500',
-            'qtde'    => 5
-        ],
-    ],
+    'itens'    => [],
 ];
+
+// Teve postagem?
+if (isset($_POST[ 'email' ])) {
+
+    // Pegando campos
+    $cotacao[ 'email' ] = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
+    $cotacao[ 'razao' ] = filter_input(INPUT_POST, 'razao');
+    $cotacao[ 'cnpj' ] = filter_input(INPUT_POST, 'cnpj');
+    $cotacao[ 'ie' ] = filter_input(INPUT_POST, 'ie');
+    $cotacao[ 'tipo' ] = filter_input(INPUT_POST, 'tipo');
+    $cotacao[ 'cep' ] = filter_input(INPUT_POST, 'cep');
+    $cotacao[ 'rua' ] = filter_input(INPUT_POST, 'rua');
+    $cotacao[ 'num' ] = filter_input(INPUT_POST, 'num');
+    $cotacao[ 'bairro' ] = filter_input(INPUT_POST, 'bairro');
+    $cotacao[ 'cidade' ] = filter_input(INPUT_POST, 'cidade');
+    $cotacao[ 'uf' ] = filter_input(INPUT_POST, 'uf');
+    $cotacao[ 'telefone' ] = filter_input(INPUT_POST, 'telefone');
+    $cotacao[ 'obs' ] = filter_input(INPUT_POST, 'obs');
+
+    $produtosNome = $_POST[ 'produto' ];
+    $produtosQtde = $_POST[ 'qtde' ];
+
+    foreach ($produtosNome as $index => $ref) {
+        if (! empty($ref)) {
+            $cotacao[ 'itens' ][ $index ] = [
+                'produto' => $ref,
+                'qtde'    => $produtosQtde[ $index ]
+            ];
+        }
+    }
+
+}
 
 // Pegando produtos disponíveis
 $produtos = (new Conecta('produto'))->execute('
