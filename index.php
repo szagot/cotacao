@@ -1,13 +1,13 @@
 <?php
-require_once 'config/conecta.class.php';
+require_once '../config/conecta.class.php';
 
 $cotacao = [
     // Mensagem do sistema
     'msg'      => '',
 
     // Campos
-    'email'    => '',
     'razao'    => '',
+    'email'    => '',
     'cnpj'     => '',
     'ie'       => '',
     'tipo'     => 'Consumo',
@@ -19,8 +19,30 @@ $cotacao = [
     'uf'       => '',
     'telefone' => '',
     'obs'      => '',
-    'itens'    => [],
+
+    // Produtos
+    'itens'    => [
+        [
+            'produto' => 'AH-3528-IP65-60-12-VO',
+            'qtde'    => 3
+        ],
+        [
+            'produto' => 'KIT-AH-3528-IP65-60-12-6500',
+            'qtde'    => 5
+        ],
+    ],
 ];
+
+// Pegando produtos disponíveis
+$produtos = (new Conecta('produto'))->execute('
+    SELECT
+      PRO_REF AS ref,
+      PRO_NOME AS nome,
+      PRO_ESTOQUE AS qtdeMax
+    FROM produto
+    WHERE PRO_ATIVO = 1 AND SUB_PRO_ID IS NULL AND PRO_ESTOQUE > 0
+    ORDER BY PRO_NOME, PRO_REF
+');
 
 // Montando form
 require_once 'nav/form.php';
