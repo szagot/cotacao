@@ -1,7 +1,8 @@
 <?php
 require_once '../config/conecta.class.php';
 
-$cotacaoRaw = $cotacao = [
+/** @var array $cotacao Base de dados dos campos da cotação */
+$cotacao = [
     // Mensagem do sistema
     'msg'      => '',
     'erro'     => false,
@@ -25,9 +26,14 @@ $cotacaoRaw = $cotacao = [
     'itens'    => [],
 ];
 
+/** @var array $cotacaoRaw Base limpa para zerar campos em caso de sucesso */
+$cotacaoRaw = $cotacao;
+
+/** @var Conecta $pdo */
+$pdo = new Conecta();
+
 // Teve postagem?
 if (isset($_POST[ 'email' ])) {
-
     // Pegando campos
     $cotacao[ 'email' ] = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
     $cotacao[ 'razao' ] = filter_input(INPUT_POST, 'razao');
@@ -48,21 +54,116 @@ if (isset($_POST[ 'email' ])) {
 
     foreach ($produtosNome as $index => $ref) {
         if (! empty($ref)) {
+            $qtde = $produtosQtde[ $index ];
             $cotacao[ 'itens' ][ $index ] = [
                 'produto' => $ref,
-                'qtde'    => $produtosQtde[ $index ]
+                'qtde'    => ($qtde > 0) ? $qtde : 1
             ];
         }
     }
 
-    $cotacao[ 'msg' ] =
-        'Sua cotação foi enviada com sucesso!<br><small>Por favor, aguarde nosso retorno.<br><br>Obrigado!</small>';
+    // Verificando dados básicos e personalizando mensagens
+    if (empty($cotacao[ 'email' ])) {
+        $cotacao[ 'msg' ] = 'Você deve informar um email válido para podermos entrar em contato.';
+        $cotacao[ 'erro' ] = true;
+    }
+    if (empty($cotacao[ 'razao' ]) || empty($cotacao[ 'cnpj' ])) {
+        $cotacao[ 'msg' ] = 'Por favor, nos informe os dados de sua empresa.<br>' .
+            '<small>Razão Social e CNPJ</small>';
+        $cotacao[ 'erro' ] = true;
+    }
+    if (empty($cotacao[ 'itens' ]) && empty($cotacao[ 'obs' ])) {
+        $cotacao[ 'msg' ] = 'Por favor, selecione pelo menos 1 produto para o qual quer fazer a cotação, ' .
+            'ou deixe uma mensagem em <b>observações</b> relatando sua necessidade.';
+        $cotacao[ 'erro' ] = true;
+    }
 
-//    $cotacao['erro'] = true;
+    // Se não houveram erros...
+    if (! $cotacao[ 'erro' ]) {
+        // Configurando envio de email
+        // Email de origem (tem que ser um @aiha.com.br)
+        $emailOrigem = 'sac@aiha.com.br';
+
+        // Email para onde será enviado
+        $emailDestino = 'daniel@tmw.com.br';
+
+        // Montando tabela de produtos
+        $produtos =
+            '<table border="1" cellpadding="5" cellspacing="1"><thead><tr>' .
+            '<td><b>Ref</b></td>' .
+            '<td><b>Produto</b></td>' .
+            '<td align="center"><b>Qtde</b></td>' .
+            '</tr></thead><tbody>';
+
+        foreach ($cotacao[ 'itens' ] as $produto) {
+            $nomeProd =
+                $pdo->execute("SELECT PRO_NOME FROM produto WHERE PRO_REF = '{$produto['produto']}'", true)->PRO_NOME;
+            $produtos .=
+                "<tr>" .
+                "<td>{$produto['produto']}</td>" .
+                "<td>{$nomeProd}</td>" .
+                "<td align='center'>{$produto['qtde']}</td>" .
+                "</tr>";
+        }
+
+        $produtos .= '</tbody></table>';
+
+        // Mensagem email
+        $msgMail = utf8_decode(preg_replace('/[\n\r\s\t]+/', ' ',
+            "<html><body>
+                <p><big><b>Formulário de Cotação</b></big></p>
+                <p>
+                    <b>Email de Contato: </b> {$cotacao[ 'email' ]}<br>
+                    <b>Razão Social: </b> {$cotacao[ 'razao' ]}<br>
+                    <b>CNPJ: </b> {$cotacao[ 'cnpj' ]}<br>
+                    <b>IE: </b> {$cotacao[ 'ie' ]}<br>
+                    <b>Finalidade: </b> {$cotacao[ 'tipo' ]}<br>
+                    <b>CEP: </b> {$cotacao[ 'cep' ]}<br>
+                    <b>Rua: </b> {$cotacao[ 'rua' ]}<br>
+                    <b>Número: </b> {$cotacao[ 'num' ]}<br>
+                    <b>Bairro: </b> {$cotacao[ 'bairro' ]}<br>
+                    <b>Cidade: </b> {$cotacao[ 'cidade' ]}<br>
+                    <b>Estado: </b> {$cotacao[ 'uf' ]}<br>
+                    <b>Telefone: </b> {$cotacao[ 'telefone' ]}
+                </p><p>
+                    <b>Observações: </b> {$cotacao[ 'obs' ]}
+                </p>
+                <p><big><b>Produtos Selecionados:</b></big></p>
+                $produtos
+                <br><hr>
+                <p><small>Email enviado de 
+                    <a href='https://www.aiha.com.br/cotacao/' target='_blank'>Cotação Aiha Lâmpadas</a></small></p>
+            </body></html>"
+        ));
+
+        // Setando o envio de email
+        require_once 'config/PHPMailer/class.phpmailer.php';
+        $mail = new PHPMailer();
+        $mail->setFrom($emailOrigem, $cotacao[ 'razao' ]);
+        $mail->addReplyTo($cotacao[ 'email' ]);
+        $mail->addAddress($emailDestino);
+        $mail->Subject = utf8_decode("Formulário de Cotação Aiha Lâmpadas| {$cotacao[ 'razao' ]} <{$cotacao[ 'email' ]}>");
+        $mail->msgHTML($msgMail);
+
+        // Foi enviado?
+        if (! $mail->send()) {
+            $cotacao[ 'erro' ] = true;
+            $cotacao[ 'msg' ] =
+                'Não foi possível enviar sua cotação no momento!<br><small>Tente novamente mais tarde.<br>' .
+                '<br>Obrigado!</small>';
+        } else {
+            // Zerando envios e colocando mensagem de sucesso
+            $cotacao = $cotacaoRaw;
+            $cotacao[ 'msg' ] =
+                'Sua cotação foi enviada com sucesso!<br><small>Por favor, aguarde nosso retorno.<br>' .
+                '<br>Obrigado!</small>';
+        }
+    }
+
 }
 
 // Pegando produtos disponíveis
-$produtos = (new Conecta('produto'))->execute('
+$produtos = $pdo->execute('
     SELECT
       PRO_REF AS ref,
       PRO_NOME AS nome,
@@ -75,43 +176,3 @@ $produtos = (new Conecta('produto'))->execute('
 // Montando form
 require_once 'nav/form.php';
 exit;
-
-
-/*
-
- // Email de origem (tem que ser um @aiha.com.br)
-$emailOrigem = 'sac@aiha.com.br';
-
-// Email para onde será enviado
-$emailDestino = 'kaled@aiha.com.br';
-
-// Mensagem email
-$msgMail = preg_replace('/[\n\r\s\t]+/', ' ',
-    "<html><body>
-        <p>Olá, gostaria de saber qual a melhor lâmpada para meu ambiente.</p>
-        <p>
-            <strong>Nome: </strong> $nomeCliente<br>
-            <strong>Email:</strong> $emailCliente<br>
-            <strong>Mensagem:</strong> $msgCliente
-        </p>
-        <p>Email enviado de <a href='https://www.aiha.com.br/qlamp/' target='_blank'>Qual é a lâmpada</a> <small>(Imagem em anexo)</small>)</p>
-    </body></html>"
-);
-
-// Setando o envio de email
-require_once 'PHPMailer/class.phpmailer.php';
-$mail = new PHPMailer();
-$mail->setFrom($emailOrigem, $nomeCliente);
-$mail->addReplyTo($emailCliente);
-$mail->addAddress($emailDestino);
-$mail->Subject = "Qual a melhor foto para meu ambiente? | $nomeCliente <$emailCliente>";
-$mail->msgHTML($msgMail);
-$mail->addAttachment($foto[ 'tmp_name' ], $foto[ 'name' ]);
-
-// Foi enviado?
-if (! $mail->send()) {
-    Saida::json('Desculpe-nos, não foi possível enviar sua imagem no momento.' . PHP_EOL . 'Tente novamente mais tarde',
-        true);
-}
-
- */

@@ -44,7 +44,7 @@
     if ( msg.length && msg.find('.ok').length ) {
             setTimeout(function(){
                 msg.slideUp('slow');
-            }, 3000);
+            }, 5000);
     }
 
 })( document, jQuery );
