@@ -3,7 +3,18 @@
  * Formulário de cotação de preços para Aiha (aiha.com.br)
  */
 
-require_once '../config/conecta.class.php';
+// Iniciando a sessão
+if ( ! isset( $_SESSION ) ) @session_start();
+
+// Configurações
+require_once '../config/config.php';
+// Conexão
+require_once '../config/conecta.paginador.class.php';
+require_once '../config/conecta.parcelamento.class.php';
+require_once '../config/conecta.calcfrete.class.php';
+// Funções
+require_once '../config/functions.php';
+require_once '../config/functions.layout.php';
 
 /** @var array $cotacao Base de dados dos campos da cotação */
 $cotacao = [
@@ -177,5 +188,7 @@ $produtos = $pdo->execute('
 ');
 
 // Montando form
+require_once '../nav/header.php';
 require_once 'nav/form.php';
+require_once '../nav/footer.php';
 exit;

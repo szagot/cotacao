@@ -1,17 +1,11 @@
 @import url("//tmwxd.com.br/fontes/tmw-icons.css");
 
-* {
-    margin: 0;
+.banners {
+    display: none;
+}
+
+.conteudo_loja .dados {
     padding: 0;
-    outline: 0 none;
-}
-
-body {
-    font: 12px Arial, Helvetica, sans-serif;
-}
-
-p {
-    margin:10px 0;
 }
 
 #form-cotacao {
@@ -34,7 +28,7 @@ p {
     font-size: 18px;
 }
 
-#form-cotacao .bloco.msg.erro{
+#form-cotacao .bloco.msg.erro {
     background-color: #f7dad8;
     color: #5d010d;
 }
