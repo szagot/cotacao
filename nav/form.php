@@ -77,20 +77,49 @@ if (! isset($cotacao)) {
                             <input type="text" name="bairro" id="bairro" value="<?= $cotacao[ 'bairro' ] ?>">
                         </div>
 
-                        <div class="campo big">
+                        <div class="campo small">
                             <label for="cidade">Cidade</label>
                             <input type="text" name="cidade" id="cidade" value="<?= $cotacao[ 'cidade' ] ?>">
                         </div>
 
-                        <div class="campo small no-margin">
+                        <div class="campo small">
                             <label for="uf">Estado</label>
-                            <input type="text" name="uf" id="uf" value="<?= $cotacao[ 'uf' ] ?>">
+                            <select name="uf" id="uf">
+                                <option></option>
+                                <option <?= ($cotacao[ 'uf' ] == 'AC') ? 'selected' : '' ?>>AC</option>
+                                <option <?= ($cotacao[ 'uf' ] == 'AL') ? 'selected' : '' ?>>AL</option>
+                                <option <?= ($cotacao[ 'uf' ] == 'AM') ? 'selected' : '' ?>>AM</option>
+                                <option <?= ($cotacao[ 'uf' ] == 'AP') ? 'selected' : '' ?>>AP</option>
+                                <option <?= ($cotacao[ 'uf' ] == 'BA') ? 'selected' : '' ?>>BA</option>
+                                <option <?= ($cotacao[ 'uf' ] == 'CE') ? 'selected' : '' ?>>CE</option>
+                                <option <?= ($cotacao[ 'uf' ] == 'DF') ? 'selected' : '' ?>>DF</option>
+                                <option <?= ($cotacao[ 'uf' ] == 'ES') ? 'selected' : '' ?>>ES</option>
+                                <option <?= ($cotacao[ 'uf' ] == 'GO') ? 'selected' : '' ?>>GO</option>
+                                <option <?= ($cotacao[ 'uf' ] == 'MA') ? 'selected' : '' ?>>MA</option>
+                                <option <?= ($cotacao[ 'uf' ] == 'MG') ? 'selected' : '' ?>>MG</option>
+                                <option <?= ($cotacao[ 'uf' ] == 'MT') ? 'selected' : '' ?>>MT</option>
+                                <option <?= ($cotacao[ 'uf' ] == 'MS') ? 'selected' : '' ?>>MS</option>
+                                <option <?= ($cotacao[ 'uf' ] == 'PA') ? 'selected' : '' ?>>PA</option>
+                                <option <?= ($cotacao[ 'uf' ] == 'PB') ? 'selected' : '' ?>>PB</option>
+                                <option <?= ($cotacao[ 'uf' ] == 'PE') ? 'selected' : '' ?>>PE</option>
+                                <option <?= ($cotacao[ 'uf' ] == 'PI') ? 'selected' : '' ?>>PI</option>
+                                <option <?= ($cotacao[ 'uf' ] == 'PR') ? 'selected' : '' ?>>PR</option>
+                                <option <?= ($cotacao[ 'uf' ] == 'RJ') ? 'selected' : '' ?>>RJ</option>
+                                <option <?= ($cotacao[ 'uf' ] == 'RN') ? 'selected' : '' ?>>RN</option>
+                                <option <?= ($cotacao[ 'uf' ] == 'RS') ? 'selected' : '' ?>>RS</option>
+                                <option <?= ($cotacao[ 'uf' ] == 'RO') ? 'selected' : '' ?>>RO</option>
+                                <option <?= ($cotacao[ 'uf' ] == 'RR') ? 'selected' : '' ?>>RR</option>
+                                <option <?= ($cotacao[ 'uf' ] == 'SC') ? 'selected' : '' ?>>SC</option>
+                                <option <?= ($cotacao[ 'uf' ] == 'SE') ? 'selected' : '' ?>>SE</option>
+                                <option <?= ($cotacao[ 'uf' ] == 'SP') ? 'selected' : '' ?>>SP</option>
+                                <option <?= ($cotacao[ 'uf' ] == 'TO') ? 'selected' : '' ?>>TO</option>
+                            </select>
                         </div>
 
-                        <div class="campo small">
+                        <div class="campo small no-margin">
                             <label for="telefone">Telefone</label>
                             <input type="text" name="telefone" id="telefone" value="<?= $cotacao[ 'telefone' ] ?>"
-                                   required>
+                                   placeholder="(99) 9999-9999" required>
                         </div>
                     </div>
                 </div>
@@ -150,7 +179,7 @@ if (! isset($cotacao)) {
                 <span class="divisoria"></span>
 
                 <div class="bloco opcional">
-                    <h3 class="title">Observação</h3>
+                    <h3 class="title">Observações</h3>
                     <div class="content">
                         <textarea name="obs" id="obs"><?= $cotacao[ 'obs' ] ?></textarea>
                     </div>
@@ -165,6 +194,7 @@ if (! isset($cotacao)) {
         </div>
 
         <script src="../js/bases/jquery.2.min.js" type="text/javascript"></script>
+        <script src="../js/bases/mascara.js" type="text/javascript"></script>
         <script src="nav/scripts.js" type="text/javascript"></script>
     </body>
 </html>
