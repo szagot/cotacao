@@ -202,6 +202,4 @@ if (! isset($cotacao)) {
     </div>
 </div>
 
-<script src="../js/bases/jquery.2.min.js" type="text/javascript"></script>
-<script src="../js/bases/mascara.js" type="text/javascript"></script>
 <script src="nav/scripts.js" type="text/javascript"></script>
