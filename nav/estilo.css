@@ -36,7 +36,7 @@
 #form-cotacao .bloco .title {
     margin-bottom: 10px;
     padding-bottom: 5px;
-    font-size: 24px;
+    font-size: 18px;
     text-transform: uppercase;
     border-bottom: 1px solid #cbdae2;
 }
@@ -94,6 +94,7 @@
 
 #form-cotacao textarea {
     height: 100px;
+    resize: none;
 }
 
 #form-cotacao button {

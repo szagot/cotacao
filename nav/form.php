@@ -25,7 +25,7 @@ if (! isset($cotacao)) {
 
                     <!-- CAMPOS -->
                     <div class="bloco pessoal">
-                        <h3 class="title">Seus Dados</h3>
+                        <h2 class="title">Seus Dados</h2>
                         <div class="content">
                             <div class="campo small">
                                 <label for="razao">Razão Social</label>
@@ -60,7 +60,7 @@ if (! isset($cotacao)) {
                     <span class="divisoria"></span>
 
                     <div class="bloco endereco">
-                        <h3 class="title">Seu Endereço</h3>
+                        <h2 class="title">Seu Endereço</h2>
                         <div class="content">
                             <div class="campo big">
                                 <label for="rua">Rua</label>
@@ -133,7 +133,7 @@ if (! isset($cotacao)) {
 
                     <!-- Produtos -->
                     <div class="bloco produtos">
-                        <h3 class="title">Produtos</h3>
+                        <h2 class="title">Produtos</h2>
                         <div class="content">
                             <table id="produtos">
                                 <thead>
@@ -185,7 +185,7 @@ if (! isset($cotacao)) {
                     <span class="divisoria"></span>
 
                     <div class="bloco opcional">
-                        <h3 class="title">Observações</h3>
+                        <h2 class="title">Observações</h2>
                         <div class="content">
                             <textarea name="obs" id="obs"><?= $cotacao[ 'obs' ] ?></textarea>
                         </div>
