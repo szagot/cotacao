@@ -9,6 +9,9 @@ if (! isset($cotacao)) {
         <meta charset="UTF-8">
         <title>Cotação de Preços | Aiha Lâmpadas</title>
         <link href="nav/estilo.css" rel="stylesheet" type="text/css">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0">
+        <link rel="shortcut icon" href="../favicon.ico" />
+        <link rel="icon" href="../favicon.ico" />
     </head>
     <body>
         <div id="form-cotacao">
@@ -35,7 +38,7 @@ if (! isset($cotacao)) {
                         </div>
 
                         <div class="campo small">
-                            <label for="ie">Inscrição Estadual</label>
+                            <label for="ie">IE</label>
                             <input type="text" name="ie" id="ie" value="<?= $cotacao[ 'ie' ] ?>">
                         </div>
 
@@ -86,8 +89,61 @@ if (! isset($cotacao)) {
 
                         <div class="campo small">
                             <label for="telefone">Telefone</label>
-                            <input type="text" name="telefone" id="telefone" value="<?= $cotacao[ 'telefone' ] ?>" required>
+                            <input type="text" name="telefone" id="telefone" value="<?= $cotacao[ 'telefone' ] ?>"
+                                   required>
                         </div>
+                    </div>
+                </div>
+
+                <span class="divisoria"></span>
+
+                <!-- Produtos -->
+                <div class="bloco final">
+                    <h3 class="title">Produtos</h3>
+                    <div class="content">
+                        <table id="produtos">
+                            <thead>
+                                <tr>
+                                    <td width="90%">Produto</td>
+                                    <td width="10%">Qtde</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Pegando itens selecionados, se houverem -->
+                                <?php foreach ($cotacao[ 'itens' ] as $item) { ?>
+                                    <tr>
+                                        <td>
+                                            <select name="produto[]">
+                                                <option value=""></option>
+                                                <!-- Pegando produtos -->
+                                                <?php foreach ($produtos as $produto) { ?>
+                                                    <option <?= ($item[ 'produto' ] == $produto->ref) ? 'selected' : '' ?>
+                                                        value="<?= $produto->ref ?>"
+                                                        data-qtde="<?= $produto->qtdeMax ?>">
+                                                        <?= $produto->nome ?>
+                                                    </option>
+                                                <?php } ?>
+                                            </select>
+                                        </td>
+                                        <td><input type="number" name="qtde[]" value="<?= $item[ 'qtde' ] ?>" min="0">
+                                        </td>
+                                    </tr>
+                                <?php } ?>
+                                <tr id="new_line">
+                                    <td>
+                                        <select name="produto[]" class="produtos">
+                                            <option value=""></option>
+                                            <!-- Pegando produtos -->
+                                            <?php foreach ($produtos as $produto) { ?>
+                                                <option value="<?= $produto->ref ?>"
+                                                        data-qtde="<?= $produto->qtdeMax ?>"><?= $produto->nome ?></option>
+                                            <?php } ?>
+                                        </select>
+                                    </td>
+                                    <td><input type="number" name="qtde[]" value="1" min="1" class="qtde"></td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
 
@@ -102,53 +158,8 @@ if (! isset($cotacao)) {
 
                 <span class="divisoria"></span>
 
-                <!-- Produtos -->
-                <div class="bloco final">
-                    <h3 class="title">Produtos</h3>
-                    <div class="content">
-                        <table id="produtos">
-                            <thead>
-                            <tr>
-                                <td>Produto</td>
-                                <td>Qtde</td>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <!-- Pegando itens selecionados, se houverem -->
-                            <?php foreach ($cotacao[ 'itens' ] as $item) { ?>
-                                <tr>
-                                    <td>
-                                        <select name="produto[]">
-                                            <option value=""></option>
-                                            <!-- Pegando produtos -->
-                                            <?php foreach ($produtos as $produto) { ?>
-                                                <option <?= ($item[ 'produto' ] == $produto->ref) ? 'selected' : '' ?>
-                                                    value="<?= $produto->ref ?>" data-qtde="<?= $produto->qtdeMax ?>">
-                                                    <?= $produto->nome ?>
-                                                </option>
-                                            <?php } ?>
-                                        </select>
-                                    </td>
-                                    <td><input type="number" name="qtde[]" value="<?= $item[ 'qtde' ] ?>" min="0"></td>
-                                </tr>
-                            <?php } ?>
-                            <tr id="new_line">
-                                <td>
-                                    <select name="produto[]" class="produtos">
-                                        <option value=""></option>
-                                        <!-- Pegando produtos -->
-                                        <?php foreach ($produtos as $produto) { ?>
-                                            <option value="<?= $produto->ref ?>"
-                                                    data-qtde="<?= $produto->qtdeMax ?>"><?= $produto->nome ?></option>
-                                        <?php } ?>
-                                    </select>
-                                </td>
-                                <td><input type="number" name="qtde[]" value="1" min="1" class="qtde"></td>
-                            </tr>
-                            </tbody>
-                        </table>
-                        <button class="btn enviar" type="submit">Enviar</button>
-                    </div>
+                <div class="bloco opcional">
+                    <button class="btn enviar" type="submit">Enviar</button>
                 </div>
             </form>
         </div>
