@@ -1,4 +1,8 @@
 <?php
+/**
+ * Formulário de cotação de preços para Aiha (aiha.com.br)
+ */
+
 require_once '../config/conecta.class.php';
 
 /** @var array $cotacao Base de dados dos campos da cotação */
@@ -80,12 +84,11 @@ if (isset($_POST[ 'email' ])) {
 
     // Se não houveram erros...
     if (! $cotacao[ 'erro' ]) {
-        // Configurando envio de email
         // Email de origem (tem que ser um @aiha.com.br)
         $emailOrigem = 'sac@aiha.com.br';
 
         // Email para onde será enviado
-        $emailDestino = 'daniel@tmw.com.br';
+        $emailDestino = 'daniel@tmw.com.br'; # TODO: trocar para: cotacao@aiha.com.br
 
         // Montando tabela de produtos
         $produtos =
