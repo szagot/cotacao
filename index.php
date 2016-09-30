@@ -99,7 +99,7 @@ if (isset($_POST[ 'email' ])) {
         $emailOrigem = 'sac@aiha.com.br';
 
         // Email para onde será enviado
-        $emailDestino = 'daniel@tmw.com.br'; # TODO: trocar para: cotacao@aiha.com.br
+        $emailDestino = 'cotacao@aiha.com.br';
 
         // Montando tabela de produtos
         $produtos =
