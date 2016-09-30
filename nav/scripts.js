@@ -36,6 +36,15 @@
     // Máscaras
     $( '#cep' ).mask( '99999-999' );
     $( '#cnpj' ).mask( '99.999.999/9999-99' );
-    $('#telefone').mask('(99) 9999-9999?9');
+    $( '#telefone' ).mask( '(99) 9999-9999?9' );
+
+    // Ação para quando há mensagem
+    var msg = $( '#mensagem' );
+    // Se houver msg e se a mensagem for de OK
+    if ( msg.length && msg.find('.ok').length ) {
+            setTimeout(function(){
+                msg.slideUp('slow');
+            }, 3000);
+    }
 
 })( document, jQuery );

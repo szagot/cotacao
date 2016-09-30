@@ -1,9 +1,10 @@
 <?php
 require_once '../config/conecta.class.php';
 
-$cotacao = [
+$cotacaoRaw = $cotacao = [
     // Mensagem do sistema
     'msg'      => '',
+    'erro'     => false,
 
     // Campos
     'razao'    => '',
@@ -54,6 +55,10 @@ if (isset($_POST[ 'email' ])) {
         }
     }
 
+    $cotacao[ 'msg' ] =
+        'Sua cotação foi enviada com sucesso!<br><small>Por favor, aguarde nosso retorno.<br><br>Obrigado!</small>';
+
+//    $cotacao['erro'] = true;
 }
 
 // Pegando produtos disponíveis

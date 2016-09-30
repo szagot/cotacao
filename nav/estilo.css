@@ -28,6 +28,17 @@ p {
     overflow: hidden;
 }
 
+#form-cotacao .bloco.msg {
+    background-color: #e1f7e5;
+    color: #248425;
+    font-size: 18px;
+}
+
+#form-cotacao .bloco.msg.erro{
+    background-color: #f7dad8;
+    color: #5d010d;
+}
+
 #form-cotacao .bloco .title {
     margin-bottom: 10px;
     padding-bottom: 5px;

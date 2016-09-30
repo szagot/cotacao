@@ -16,7 +16,15 @@ if (! isset($cotacao)) {
     <body>
         <div id="form-cotacao">
             <form id="cotacao" action="" method="post">
-                <div class="msg"><?= $cotacao[ 'msg' ] ?></div>
+                <!-- MENSAGEM -->
+                <?php if (! empty($cotacao[ 'msg' ])) { ?>
+                    <div id="mensagem">
+                        <div class="bloco msg <?= $cotacao[ 'erro' ] ? 'erro' : 'ok' ?>">
+                            <p class="content"><?= $cotacao[ 'msg' ] ?></p>
+                        </div>
+                        <span class="divisoria"></span>
+                    </div>
+                <?php } ?>
 
                 <!-- CAMPOS -->
                 <div class="bloco pessoal">
@@ -127,7 +135,7 @@ if (! isset($cotacao)) {
                 <span class="divisoria"></span>
 
                 <!-- Produtos -->
-                <div class="bloco final">
+                <div class="bloco produtos">
                     <h3 class="title">Produtos</h3>
                     <div class="content">
                         <table id="produtos">
@@ -187,7 +195,7 @@ if (! isset($cotacao)) {
 
                 <span class="divisoria"></span>
 
-                <div class="bloco opcional">
+                <div class="bloco final">
                     <button class="btn enviar" type="submit">Enviar</button>
                 </div>
             </form>
